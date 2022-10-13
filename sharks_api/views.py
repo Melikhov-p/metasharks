@@ -55,6 +55,8 @@ def color(request, color_id):
         color = Color.objects.get(pk=color_id)
         color.delete()
         return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PATCH', 'DELETE'])
@@ -73,6 +75,8 @@ def brand(request, brand_id):
         brand = Brand.objects.get(pk=brand_id)
         brand.delete()
         return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PATCH', 'DELETE'])
@@ -91,6 +95,8 @@ def model(request, model_id):
         model = Model.objects.get(pk=model_id)
         model.delete()
         return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_orders_by(request, subject):
@@ -100,3 +106,5 @@ def get_orders_by(request, subject):
     elif subject == 'brand':
         brands = Order.objects.values('brand_id').annotate(Sum('brand_id'))
         return Response(data=brands)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
